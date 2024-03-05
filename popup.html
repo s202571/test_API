@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>popup</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
 </head>
 <body>
     <div id="notice_wrap">
@@ -14,6 +13,23 @@
             <button type="button" class="closeBtn">닫기</button>
         </p>
     </div>
-    <script src="./popup.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+        const closeBtn = document.querySelector(".closeBtn");
+        const chk = document.getElementById("chk");
+        
+        closeBtn.addEventListener("click", function() {
+            // 버튼 클릭 시 쿠키 설정
+            document.cookie = "noticeClosed=true; expires=" + new Date(new Date().getTime() + 3 * 24 * 60 * 60 * 1000).toUTCString(); // 3일간 유지
+            document.getElementById("notice_wrap").style.display = "none"; // 창 닫기
+        });
+
+        // 페이지 로드 시 쿠키 확인
+        if (document.cookie.split(';').some((item) => item.trim().startsWith('noticeClosed='))) {
+            document.getElementById("notice_wrap").style.display = "none"; // 창 닫기
+        }
+    });
+        </script>
 </body>
 </html>
